@@ -7,6 +7,15 @@ const options = document.querySelectorAll('.options li')
 const linkList = document.querySelectorAll('.side-ops li')
 
 
+const alertBtn = document.querySelector('.btn')
+const alertDiv = document.querySelector('.alert')
+
+
+alertBtn.addEventListener('click', () => {
+  alertDiv.classList.add('out')
+})
+
+
 function checkList() {
   if (navBtn.classList.contains('clicked')) {
     navBtn.classList.remove('clicked');
