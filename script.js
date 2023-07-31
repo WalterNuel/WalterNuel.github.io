@@ -1,4 +1,6 @@
 
+var navBar = document.querySelector(".nav");
+var firstBan = document.querySelector(".one")
 // Here we get all of the mobile nav buttons 
 
 // First we get the button to make it show
@@ -16,8 +18,17 @@ const linkList = document.querySelectorAll('.side-ops li')
 const alertBtn = document.querySelector('.btn')
 const alertDiv = document.querySelector('.alert')
 
+const mainBody = document.querySelector('body')
+
+
+if (alertDiv.classList.contains('out')) {
+} else {
+  mainBody.style.overflowY = 'hidden'
+}
+
 alertBtn.addEventListener('click', () => {
   alertDiv.classList.add('out')
+  mainBody.style.overflowY = 'auto'
 })
 
 
@@ -26,9 +37,11 @@ function checkList() {
   if (navBtn.classList.contains('clicked')) {
     navBtn.classList.remove('clicked');
     sideNav.classList.remove("show");
+    mainBody.style.overflowY = 'auto';
   } else {
     navBtn.classList.add('clicked');
     sideNav.classList.add("show");
+    mainBody.style.overflowY = 'hidden';
   }
 }
 
@@ -45,19 +58,19 @@ navBtn.addEventListener('click', () => {
 })
 
 // Here we loop through all of our nav buttons and give the active indicator if clicked
-options.forEach((one) => {
-  one.addEventListener('click', () => {
-    if (one.classList.contains('active')) {
-      return null
-    } else {
-      options.forEach((opp) => {
-        if (opp.classList.contains('active')) {
-          opp === one ? null : oppOrOne(opp, one)
-        }
-      })
-    }
-  })
-})
+// options.forEach((one) => {
+//   one.addEventListener('click', () => {
+//     if (one.classList.contains('active')) {
+//       return null
+//     } else {
+//       options.forEach((opp) => {
+//         if (opp.classList.contains('active')) {
+//           opp === one ? null : oppOrOne(opp, one)
+//         }
+//       })
+//     }
+//   })
+// })
 
 // This calls the checkList function after a button in the mobile nav is clicked
 linkList.forEach((one) => {
@@ -68,8 +81,113 @@ linkList.forEach((one) => {
 
 // Basic code for sticky topNav
 window.addEventListener("scroll", function() {
-  var navBar = document.querySelector(".nav");
-  var firstBan = document.querySelector(".one")
   navBar.classList.toggle("sticky", window.scrollY > firstBan.scrollHeight);
 })
 
+
+
+//Handling the colors
+//Get each element
+const lightBtn = document.getElementById('light')
+const darkBtn = document.getElementById('dark')
+const dimBtn = document.getElementById('dim')
+
+
+const bannerContent = document.querySelectorAll('.banner')
+
+function dimStyled(element, variable) {
+  element.forEach(e => {
+    e.style.backgroundColor = `var(${variable})`;
+  });
+}
+
+
+darkBtn.addEventListener('click', () => {
+  console.log('Dark theme selected')
+  var mainStyle = '--main-theme';
+  bannerContent.forEach(e => {
+    e.style.backgroundColor = `var(${mainStyle})`;
+  });
+})
+
+dimBtn.addEventListener('click', () => {
+  console.log('Dim theme selected')
+  var mainStyle = '--main-theme3';
+  bannerContent.forEach(e => {
+    e.style.backgroundColor = `var(${mainStyle})`;
+  });
+})
+
+const btnCode = document.querySelectorAll(".github-code button")
+
+btnCode.forEach(element => {
+  const btnChild = element.lastElementChild
+  
+  element.addEventListener('mouseenter', () => {
+    btnChild.classList.add("active")
+    console.log('I WORK MFS!')
+  })
+
+  element.addEventListener('mouseleave', () => {
+    btnChild.classList.remove("active")
+    console.log('I WORK MFS!')
+  })
+});
+
+const mediaScreen = document.getElementById('images-vids');
+const mediaContain = document.getElementById('media-contained');
+const mediaCancelBtn = document.getElementById('media-cancel');
+
+
+//insertmemo demo video
+// let memoElement;
+// memoElement = document.createElement("video");
+// memoElement.setAttribute("controls", '');
+// memoElement.setAttribute("autoplay", true);
+// memoElement.controls = true;
+// memoElement.src = `videos/${memo}/${memo}_demo.mp4`; // Set the image source
+// memoElement.alt = "Demo for Memo"; 
+
+// let memoElement;
+// memoElement = document.createElement("video");
+// memoElement.setAttribute("controls", '');
+// memoElement.setAttribute("autoplay", true);
+// memoElement.controls = true;
+// memoElement.src = "videos/memo/memo_demo.mp4"; // Set the image source
+// memoElement.alt = "Demo for Memo"; 
+
+
+function playMedia(params) {
+  mediaScreen.classList.add('active')
+
+  var name = `${params}`
+
+  let mediaSource;
+  mediaSource = document.createElement("video");
+  mediaSource.setAttribute("controls", '');
+  mediaSource.setAttribute("autoplay", true);
+  mediaSource.controls = true;
+  mediaSource.id = 'media_main_contained'
+  // mediaSource.src = `videos/${params}/${params}_demo.mp4`; // Set the image source
+  // mediaSource.alt = `Demo for ${params}`; 
+  mediaSource.src = "videos/" + name + "/" + name + "_demo.mp4"; // Set the image source
+  mediaSource.alt = "Demo for" + name; 
+
+
+  mediaContain.appendChild(mediaSource)
+  navBar.classList.add('blind')
+  
+  mainBody.style.overflowY = 'hidden'
+}
+
+function cancelClicked() {
+  mainBody.style.overflowY = 'auto'
+  mediaScreen.classList.remove('active')
+  navBar.classList.remove('blind')
+  const childElement = document.getElementById('media_main_contained');
+  if (childElement) {
+    mediaContain.removeChild(childElement);
+  }
+}
+
+mediaCancelBtn.addEventListener('click', cancelClicked);
